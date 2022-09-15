@@ -58,6 +58,8 @@ public class MarsRoverAssignment {
     }
 
     protected String printFinalPositionOfRover(String str, Rover rover, int rowBound, int columnBound) {
+        if(rover.x > rowBound || rover.y > columnBound || rover.x < 0 || rover.y < 0)
+            throw new ArrayIndexOutOfBoundsException("Out of Bounds of Plateau.");
         for (char instructions : str.toCharArray()) {
             if (instructions == 'M') {
                 // For N and S move the y axis a unit.

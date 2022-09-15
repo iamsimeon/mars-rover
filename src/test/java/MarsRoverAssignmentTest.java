@@ -13,12 +13,18 @@ class MarsRoverAssignmentTest {
     }
 
     @Test
-    void testPrintFinalPositionOfRoverShouldThrowOutOfBoundsException() {
+    void testPrintFinalPositionOfRoverShouldThrowOutOfBoundsOnInstructionsException() {
         Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             marsRoverAssignment.printFinalPositionOfRover("M", new MarsRoverAssignment.Rover(0, 0, 'N'), 0, 0);
         });
     }
 
+    @Test
+    void testPrintFinalPositionOfRoverShouldThrowOutOfBoundsOnInitialPosException() {
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            marsRoverAssignment.printFinalPositionOfRover("M", new MarsRoverAssignment.Rover(1, 0, 'N'), 0, 0);
+        });
+    }
 
     @Test
     void testPrintFinalPositionOfRoverShouldThrowIllegalArgumentException() {
