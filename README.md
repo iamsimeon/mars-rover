@@ -34,5 +34,7 @@ MMRMMRMRRM
 MMRMMRMRRM
 
 ```
-3. Ensure that there is a `new line after the last instruction` (if It's not there click enter to add a new line), Then click enter again on your keyboard to print out the result.
+3. Ensure that there is a **new line after the last instruction** (if It's not there click enter to add a new line), Then click enter **again** on your keyboard to print out the result.
 4. The program will then output the final position of rovers.
+
+

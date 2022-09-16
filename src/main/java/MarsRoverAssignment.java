@@ -13,6 +13,7 @@ public class MarsRoverAssignment {
         MarsRoverAssignment marsRoverAssignment = new MarsRoverAssignment();
         String strInputs;
         List<String> inputs = new ArrayList<>();
+        System.out.println("Enter the data.");
         while ((strInputs = reader.readLine()) != null && !strInputs.trim().isEmpty())
             inputs.add(strInputs);
         int countOfInputs = inputs.size() - 1;
