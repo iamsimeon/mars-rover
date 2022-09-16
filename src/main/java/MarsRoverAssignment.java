@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MarsRoverAssignment {
 
@@ -9,39 +11,50 @@ public class MarsRoverAssignment {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         MarsRoverAssignment marsRoverAssignment = new MarsRoverAssignment();
-        System.out.println("Enter Plateau bounds");
-        String bounds = reader.readLine().trim();
-        if (bounds.isEmpty())
-            return;
-        String[] boundsArr = bounds.split(" ");
-        if(boundsArr.length != 2)
-            throw new IllegalArgumentException("Invalid Bounds (Expects in form <r c> e.g 5 5).");
-        int rowBound = Integer.parseInt(boundsArr[0]);
-        int columnBound = Integer.parseInt(boundsArr[1]);
-
-        //Since we are not supplying number of rovers program will run till the program is terminated.
-        while (true) {
-            System.out.println("Enter Current Position of Rover.");
-            String currentPosition = reader.readLine().trim();
-            if (currentPosition.isEmpty())
+        String strInputs;
+        List<String> inputs = new ArrayList<>();
+        while ((strInputs = reader.readLine()) != null && !strInputs.trim().isEmpty())
+            inputs.add(strInputs);
+        int countOfInputs = inputs.size() - 1;
+        if (countOfInputs >= 2 && countOfInputs % 2 == 0) {
+            String bounds = inputs.get(0).trim();
+            if (bounds.isEmpty())
                 return;
+            String[] boundsArr = bounds.split(" ");
+            if (boundsArr.length != 2)
+                throw new IllegalArgumentException("Invalid Bounds (Expects in form <r c> e.g 5 5).");
+            int rowBound = Integer.parseInt(boundsArr[0]);
+            int columnBound = Integer.parseInt(boundsArr[1]);
 
-            String[] posArr = currentPosition.split(" ");
-            int x = Integer.parseInt(posArr[0]);
-            int y = Integer.parseInt(posArr[1]);
-            char cardinal = Character.toUpperCase(posArr[2].charAt(0));
-            if(posArr.length != 3)
-                throw new IllegalArgumentException("Invalid Position (Expects in form <x y cardinal> e.g 1 2 N).");
-            if(cardinals.indexOf(cardinal) < 0)
-                throw new IllegalArgumentException("Invalid Cardinal Expects N or S or E or W e.g N.");
+            List<String> resultsList = new ArrayList<>();
+            int i = 1;
+            while (i < countOfInputs) {
+                String currentPosition = inputs.get(i++).trim();
+                String instructions = inputs.get(i++).trim();
 
-            Rover rover = new Rover(x, y, cardinal);
+                if (currentPosition.isEmpty())
+                    return;
 
-            System.out.println("Enter instructions for rover.");
-            String instructions = reader.readLine().trim();
+                String[] posArr = currentPosition.split(" ");
+                int x = Integer.parseInt(posArr[0]);
+                int y = Integer.parseInt(posArr[1]);
+                char cardinal = Character.toUpperCase(posArr[2].charAt(0));
+                if (posArr.length != 3)
+                    throw new IllegalArgumentException("Invalid Position (Expects in form <x y cardinal> e.g 1 2 N).");
+                if (cardinals.indexOf(cardinal) < 0)
+                    throw new IllegalArgumentException("Invalid Cardinal Expects N or S or E or W e.g N.");
 
-            String result = marsRoverAssignment.printFinalPositionOfRover(instructions, rover, rowBound, columnBound);
-            System.out.println(result);
+                Rover rover = new Rover(x, y, cardinal);
+
+
+                String result = marsRoverAssignment.printFinalPositionOfRover(instructions, rover, rowBound, columnBound);
+                resultsList.add(result);
+            }
+
+            for (String result : resultsList)
+                System.out.println(result);
+        } else {
+            throw new IllegalArgumentException("Invalid input.");
         }
     }
 
@@ -58,7 +71,7 @@ public class MarsRoverAssignment {
     }
 
     protected String printFinalPositionOfRover(String str, Rover rover, int rowBound, int columnBound) {
-        if(rover.x > rowBound || rover.y > columnBound || rover.x < 0 || rover.y < 0)
+        if (rover.x > rowBound || rover.y > columnBound || rover.x < 0 || rover.y < 0)
             throw new ArrayIndexOutOfBoundsException("Out of Bounds of Plateau.");
         for (char instructions : str.toCharArray()) {
             if (instructions == 'M') {
